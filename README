@@ -9,7 +9,7 @@
 # This script aims to help you to backup your entirely
 # your website through and incremental copy and making
 # a daily tarball. It is also possible to make a dump
-# of your database.
+# of your database (MySql).
 #
 # Prerequisites :
 # To be able to join the remote server and copy 
@@ -26,9 +26,9 @@
 # There aro some variables that you have to set up :
 # - SITE is the global path of your website
 # - sitename is the name's directory to backup
-# - bdd_user
-# - bdd_pass
 # - bdd_name
+# - copy .my.cnf into the home directory of your remote account
+#   filled with your database infos
 # Usage:
 # Usage: $PROGNAME [-s] "login@host" [-d|--dest] "/dir/to/save"
 #       $PROGNAME [-b] [-s] "login@host" [-d|--dest] "/dir/to/save"
