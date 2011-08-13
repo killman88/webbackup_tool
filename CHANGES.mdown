@@ -1,0 +1,9 @@
+# WebBackup_Tool changelog
+
+## From 13 09 2011
+- [change] Static data base informations removed from the script and deported to remote server `.my.cnf`
+ Please be careful : `chmod 600 .my.cnf`
+
+## Before 13 09 2011
+ - [new] Add of new functionalities such as dump sql database (date-sitename-dump.sql)
+ - [new] Add incremental copy of your website, and tarball (date-sitename)
