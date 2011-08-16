@@ -17,7 +17,7 @@
 # rsync has to be installed on the remote server
 # SOURCES:
 # http://technique.arscenic.org/transfert-de-donnees-entre/article/rsync-synchronisation-distant-de
-#
+# http://dev.mysql.com/doc/refman/5.0/fr/option-files.html
 ################################################
 ###########
 # Variables
@@ -30,8 +30,8 @@ SRV_TO_BCK="" # login@host
 sitename="scuttle-openwebtech" # this is to name the tarball
 date=`date -u '+%Y%m%d'`
 # dump BDD
-bdd_user="root"
-bdd_pass="NudsfpGuvdp"
+# see README
+# bdd_user; bdd_pass replaced by ~/.my.cnf
 bdd_name="scuttle"
 dump_flag=1
 ################################################
@@ -89,7 +89,7 @@ fi
 # make_tar
 function make_tar() {
 echo -e "Making a $date-$sitename.tar.gz of $site...\n"
-tar -zcvf $DEST/$date-$sitename.tar.gz $DEST/ # Make a tarball from the site for historization
+cd $DEST; tar -zcvf $date-$sitename.tar.gz $sitename # Make a tarball from the site for historization
 case $? in
 	2)
 		echo -e "$DEST/$sitename : No such file or directory!"
@@ -108,7 +108,7 @@ then
 	exit 1
 else
 	echo -e "Making sql dump from $bdd_name...\n"
-	ssh $SRV_TO_BCK "mysqldump -h localhost -u$bdd_user -p$bdd_pass $bdd_name>$date-$sitename-dump.sql" && scp $SRV_TO_BCK:/root/$date-$sitename-dump.sql $DEST/$date-$sitename-dump.sql
+	ssh $SRV_TO_BCK "mysqldump $bdd_name>$date-$sitename-dump.sql" && scp $SRV_TO_BCK:/root/$date-$sitename-dump.sql $DEST/$date-$sitename-dump.sql
 	ssh $SRV_TO_BCK "rm /root/$date-$sitename-dump.sql" # delete sql dump when finishing
 	exit 0
 fi
@@ -172,11 +172,12 @@ then
 	make_tar
 	echo -e "Backup done!\n"
 	exit 0
-elif [[ check_site && $dump_flag -eq 0 ]]
+elif [[ (check_site) && ($dump_flag -eq 0) && (`ssh $SRV_TO_BCK 'test -e /root/.my.cnf; echo $?'` -eq 0) ]]
 then
 	make_sqldump
 	echo -e "SQL dump done!\n"
 else
+	echo -e ".my.cnf missing\n"
 	exit 1
 fi
 
