@@ -5,7 +5,8 @@
 
 ## Description:
 This script aims to help you to backup your entirely your website through and incremental copy and making
-a daily tarball. It is also possible to make a dump of your database (MySql).
+a daily tarball. The preserve the space disk and avoid useless backups, the oldest backups (e.g: older than 30days)
+will be erased at the end of the batch.It is also possible to make a dump of your database (MySql).
 
 ## Prerequisites :
 To be able to join the remote server and copy you have to be connected via ssh without having
@@ -22,8 +23,14 @@ There aro some variables in `bachup.sh` that you have to set up :
 * set sitename (this is the name's directory to backup)
 * set bdd_name
 * Fill on your remote server the data base information: `vi /root/.my.cnf`
+* set datelimit to clean the oldest backups
 
 ## Usage:
 - $PROGNAME [-s] "login@host" [-d|--dest] "/dir/to/save"
 - $PROGNAME [-b] [-s] "login@host" [-d|--dest] "/dir/to/save"
+
+## Cron
+This may useful to put this script as cron task :
+`20 07 * * 1 /path/backup.sh -b -s root@remotehost -d /local/path/to/save/` #mysqldump
+`22 07 * * 1 /path/to/backup.sh -s root@remotehost -d /local/path/to/save/` #backup your website
 

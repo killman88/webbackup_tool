@@ -1,4 +1,6 @@
 # WebBackup_Tool changelog
+## From 22 08 2011
+- [new] Add autoclean for older backups than X days ago
 
 ## From 13 09 2011
 - [change] Static data base informations removed from the script and deported to remote server `.my.cnf`

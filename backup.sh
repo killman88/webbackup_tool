@@ -34,6 +34,8 @@ date=`date -u '+%Y%m%d'`
 # bdd_user; bdd_pass replaced by ~/.my.cnf
 bdd_name="scuttle"
 dump_flag=1
+#backups cleaning
+datelimit=`date -d '10 days ago' '+%Y%m%d'`
 ################################################
 # Functions
 ############
@@ -166,6 +168,7 @@ done
 #  Main
 #
 ############################
+#backup
 if [[ check_site && $dump_flag -eq 1 ]]
 then
 	sync_site
@@ -180,4 +183,14 @@ else
 	echo -e ".my.cnf missing\n"
 	exit 1
 fi
+#clean old backups
+#WARNING: do not forget to set up datelimit!
+for file in `ls ${DEST}/* -1`
+do
+        if [[ "$file" < "$datelimit" ]]
+        then
+        	#echo $file
+        	rm -r $file
+        fi
+done
 
