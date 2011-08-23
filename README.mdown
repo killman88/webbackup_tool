@@ -5,7 +5,7 @@
 
 ## Description:
 This script aims to help you to backup your entirely your website through and incremental copy and making
-a daily tarball. The preserve the space disk and avoid useless backups, the oldest backups (e.g: older than 30days)
+a daily tarball. To preserve the space disk and avoid useless backups, the oldest backups (e.g: older than 30days)
 will be erased at the end of the batch.It is also possible to make a dump of your database (MySql).
 
 ## Prerequisites :
